@@ -1,0 +1,19 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main # Запускати магію тільки при оновленні гілки main
+
+jobs:
+  deploy:
+    runs-on: self-hosted # Це каже GitHub: "Шукай нашого агента в UTM!"
+
+    steps:
+      - name: Завантаження нового коду
+        uses: actions/checkout@v4
+
+      - name: Перезапуск Docker-контейнерів
+        run: |
+          docker-compose down
+          docker-compose up -d --build
