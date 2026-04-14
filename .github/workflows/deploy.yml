@@ -3,11 +3,11 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main # Запускати магію тільки при оновленні гілки main
+      - main
 
 jobs:
   deploy:
-    runs-on: self-hosted # Це каже GitHub: "Шукай нашого агента в UTM!"
+    runs-on: self-hosted 
 
     steps:
       - name: Завантаження нового коду
