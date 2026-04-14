@@ -17,6 +17,8 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=crypto_data
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-influx-token
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
 
   vault:
     image: hashicorp/vault:latest
@@ -26,6 +28,8 @@ services:
       VAULT_DEV_ROOT_TOKEN_ID: "my-root-token"
     cap_add:
       - IPC_LOCK
+    volumes:
+      - vault-data:/vault/file
 
   prometheus:
     image: prom/prometheus
@@ -38,6 +42,13 @@ services:
     image: grafana/grafana
     ports:
       - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
     depends_on:
       - influxdb
       - prometheus
+
+volumes:
+  influxdb-data:
+  grafana-data:
+  vault-data:
